@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cisterna Viva — água da chuva que dura</title>
+<meta name="description" content="Calcule quanto de água da chuva seu telhado capta, acompanhe seu reservatório e aprenda a cuidar da água em casa. Funciona offline depois da primeira visita.">
+<meta name="theme-color" content="#0f3a44">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://images.pexels.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Pular para o conteúdo</a>
+
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" href="#/inicio" title="Início"><img class="brand-img" src="assets/images/brand/cisterna-viva-wordmark.png" width="870" height="361" alt="Cisterna Viva — início" decoding="async"></a>
+    <nav class="nav" aria-label="Principal">
+      <a href="#/inicio" data-nav="inicio"><span>Início</span></a>
+      <a href="#/calculadora" data-nav="calculadora"><span>Calcular</span></a>
+      <a href="#/reservatorio" data-nav="reservatorio"><span>Reservatório</span></a>
+      <a href="#/guias" data-nav="guias"><span>Guias</span></a>
+      <a href="#/apoio" data-nav="apoio"><span>Apoio</span></a>
+    </nav>
+    <span class="net" id="netState" role="status"></span>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+
+<!-- ================= ENTRAR (opcional) ================= -->
+<section class="view entry" id="view-entrar" data-title="Bem-vindo" aria-labelledby="h-entrar" hidden>
+  <div class="entry-inner">
+    <h1 id="h-entrar" class="entry-logo"><img src="assets/images/brand/cisterna-viva-logo.png" width="1254" height="1254" alt="Logo Cisterna Viva" decoding="async"></h1>
+    <p class="entry-lede">Água da chuva que dura: do telhado à torneira.</p>
+    <form class="entry-form" id="entryForm" novalidate>
+      <label for="nomeEntrada">Como podemos te chamar? <span>(opcional, fica só neste aparelho)</span></label>
+      <input id="nomeEntrada" type="text" maxlength="40" autocomplete="given-name" placeholder="Seu nome">
+      <button class="btn btn-primary" type="submit">Entrar</button>
+      <button class="link-btn" type="button" id="entrySkip">Continuar sem informar o nome</button>
+    </form>
+  </div>
+</section>
+
+<!-- ================= INÍCIO ================= -->
+<section class="view" id="view-inicio" data-title="Início" aria-labelledby="h-inicio">
+  <div class="hero">
+    <figure class="ph hero-ph" data-fallback="Fotografia indisponível no momento">
+      <img data-photo="tanques" data-sizes="100vw" data-widths="800,1280,1920" data-eager alt="">
+    </figure>
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow" id="greeting">Captação de água da chuva</p>
+        <h1 id="h-inicio">A chuva de hoje, <em>guardada</em> para os dias secos.</h1>
+        <p class="lede">O Cisterna Viva é para famílias, sítios e comunidades que querem captar a água do telhado, saber quanto ela rende e fazer o reservatório durar até a próxima chuva.</p>
+        <div class="cta-row">
+          <a class="btn btn-accent" href="#/calculadora">Calcular minha captação</a>
+          <a class="btn btn-ghost" href="#/reservatorio">Acompanhar meu reservatório</a>
+        </div>
+      </div>
+      <form class="quick glass" id="quickForm" novalidate>
+        <h2>Quanto chove no seu telhado?</h2>
+        <p>Informe a área e veja uma estimativa em segundos.</p>
+        <label for="quickArea">Área do telhado (m²)</label>
+        <div class="row">
+          <input id="quickArea" type="number" inputmode="numeric" min="10" max="500" step="1" value="60">
+          <button class="btn btn-accent" type="submit">Estimar</button>
+        </div>
+        <p class="hint">É uma estimativa regional. Você ajusta tudo na próxima tela.</p>
+      </form>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section class="snap" aria-labelledby="h-snap">
+      <div class="snap-head">
+        <p class="eyebrow">Seu reservatório</p>
+        <h2 id="h-snap">Quantos dias de água você tem?</h2>
+      </div>
+      <div class="snap-body" id="homeSnap"></div>
+      <form class="namebar" id="nameForm">
+        <label for="nome">Como podemos te chamar? <span>(opcional, fica só neste aparelho)</span></label>
+        <div class="row"><input id="nome" type="text" maxlength="40" autocomplete="given-name" placeholder="Seu nome"><button class="btn btn-quiet" type="submit">Salvar</button></div>
+      </form>
+    </section>
+
+    <section class="flow" aria-labelledby="h-flow">
+      <p class="eyebrow">Do telhado à torneira</p>
+      <h2 id="h-flow">Três passos, uma conta simples.</h2>
+      <ol class="flow-list">
+        <li class="flow-item">
+          <figure class="ph" data-fallback="Fotografia indisponível no momento"><img data-photo="calha" data-sizes="(min-width:900px) 30vw, 90vw" data-widths="500,800,1100" loading="lazy" alt=""></figure>
+          <div><span class="num">01</span><h3>Capte</h3><p>Cada milímetro de chuva sobre 1&nbsp;m² de telhado rende até 1 litro. Calhas e um bom desvio da primeira chuva fazem a diferença.</p></div>
+        </li>
+        <li class="flow-item">
+          <figure class="ph" data-fallback="Fotografia indisponível no momento"><img data-photo="tanques" data-sizes="(min-width:900px) 30vw, 90vw" data-widths="500,800,1100" loading="lazy" alt=""></figure>
+          <div><span class="num">02</span><h3>Guarde</h3><p>Mantenha o reservatório tampado e acompanhe o nível. Saber os dias que restam evita a surpresa da seca.</p></div>
+        </li>
+        <li class="flow-item">
+          <figure class="ph" data-fallback="Fotografia indisponível no momento"><img data-photo="horta" data-sizes="(min-width:900px) 30vw, 90vw" data-widths="500,800,1100" loading="lazy" alt=""></figure>
+          <div><span class="num">03</span><h3>Faça render</h3><p>Distribua o consumo entre casa, higiene e irrigação e descubra onde dá para economizar.</p></div>
+        </li>
+      </ol>
+    </section>
+  </div>
+
+  <section class="split">
+    <div class="wrap split-grid">
+      <figure class="ph split-ph" data-fallback="Fotografia indisponível no momento"><img data-photo="alagoas" data-sizes="(min-width:900px) 40vw, 90vw" data-widths="600,900,1200" loading="lazy" alt=""></figure>
+      <div class="split-copy">
+        <p class="eyebrow light">Apoio público</p>
+        <h2>Existe um programa que ajuda a construir cisternas.</h2>
+        <p>O Programa Cisternas, do governo federal, atende famílias rurais de baixa renda inscritas no CadÚnico com tecnologias sociais de captação de água da chuva. Veja os critérios e como solicitar nos canais oficiais.</p>
+        <a class="btn btn-accent" href="#/apoio">Ver apoio e programas</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <section class="guides-prev" aria-labelledby="h-gp">
+      <div class="head-row"><div><p class="eyebrow">Saneamento no dia a dia</p><h2 id="h-gp">Guias práticos</h2></div><a class="more" href="#/guias">Ver todos →</a></div>
+      <div class="gcards" id="homeGuides"></div>
+    </section>
+
+    <aside class="honest" aria-labelledby="h-honest">
+      <h2 id="h-honest">Estimativa não é medição.</h2>
+      <p>Os valores de chuva usados aqui são faixas de referência por região, não o histórico do seu município. Para decisões importantes, confira a chuva local no INMET e peça orientação técnica. <a href="#/fontes">Ver fontes e premissas</a>.</p>
+    </aside>
+  </div>
+</section>
+
+<!-- ================= CALCULADORA ================= -->
+<section class="view" id="view-calculadora" data-title="Calculadora de captação" aria-labelledby="h-calc" hidden>
+  <div class="wrap page">
+    <header class="page-head">
+      <p class="eyebrow">Calculadora de captação</p>
+      <h1 id="h-calc">Quanto de água o seu telhado pode captar?</h1>
+      <p class="lede">A conta é: <strong>chuva (mm) × área (m²) × coeficiente do telhado × (1 − perdas)</strong>. Ajuste cada fator abaixo.</p>
+    </header>
+
+    <div class="calc-grid">
+      <form class="panel" id="calcForm" novalidate autocomplete="off">
+        <fieldset>
+          <legend>1. Seu telhado</legend>
+          <label for="area">Área do telhado (m²)</label>
+          <div class="stepper">
+            <button type="button" class="step" data-step="-10" aria-label="Diminuir 10 metros quadrados">−</button>
+            <input id="area" type="number" inputmode="decimal" min="10" max="500" step="1" aria-describedby="areaHelp areaErr">
+            <button type="button" class="step" data-step="10" aria-label="Aumentar 10 metros quadrados">+</button>
+          </div>
+          <input id="areaRange" type="range" min="10" max="500" step="5" aria-label="Área do telhado, controle deslizante">
+          <p class="help" id="areaHelp">Meça a projeção horizontal do telhado (comprimento × largura da área coberta), não a inclinação.</p>
+          <p class="err" id="areaErr" role="alert" hidden></p>
+
+          <label for="roof">Material do telhado</label>
+          <select id="roof"></select>
+          <p class="help" id="roofHelp"></p>
+        </fieldset>
+
+        <fieldset>
+          <legend>2. Onde você mora</legend>
+          <label for="uf">Estado</label>
+          <select id="uf"></select>
+
+          <label for="cityInput" id="cityLabel">Município</label>
+          <div class="combo">
+            <input id="cityInput" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="cityList" aria-describedby="cityStatus cityErr" autocomplete="off" autocapitalize="words" spellcheck="false" placeholder="Digite para buscar">
+            <ul id="cityList" role="listbox" aria-labelledby="cityLabel" hidden></ul>
+          </div>
+          <p class="err" id="cityErr" role="alert" hidden></p>
+          <div class="status-line">
+            <p id="cityStatus" class="muni-status" role="status"></p>
+            <button type="button" class="link-btn" id="cityRetry" hidden>Tentar sincronizar de novo</button>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>3. Chuva e perdas</legend>
+          <label for="perfil">Perfil de chuva de referência</label>
+          <select id="perfil"></select>
+          <p class="help" id="perfilHelp"></p>
+
+          <label for="chuvaAno">Chuva média anual do seu município (mm/ano) <span class="opt">opcional</span></label>
+          <input id="chuvaAno" type="number" inputmode="numeric" min="100" max="6000" step="10" placeholder="Ex.: 650">
+          <p class="help">Se você souber (veja as Normais Climatológicas do INMET), informe aqui. O app usa o formato de chuva do perfil escolhido, ajustado para esse total.</p>
+
+          <label for="perdas">Perdas do sistema: <output id="perdasOut">10%</output></label>
+          <input id="perdas" type="range" min="0" max="40" step="1">
+          <p class="help">Descarte da primeira chuva, filtro, vazamento e transbordo do reservatório. Em sistemas simples, 10% a 20% é comum.</p>
+
+          <label for="mes">Mês para o resultado</label>
+          <select id="mes"></select>
+        </fieldset>
+      </form>
+
+      <section class="panel result" aria-labelledby="h-res" aria-live="polite">
+        <h2 id="h-res">Resultado estimado</h2>
+        <p class="res-label" id="resLabel"></p>
+        <p class="res-big" id="resBig">—</p>
+        <p class="res-sub" id="resSub"></p>
+
+        <div class="formula" id="formula"></div>
+
+        <h3>Mês a mês</h3>
+        <div class="bars" id="bars" role="img" aria-label="" ></div>
+        <details class="tbl">
+          <summary>Ver valores em tabela</summary>
+          <table id="resTable"><caption class="sr">Captação estimada por mês, em litros</caption><thead><tr><th scope="col">Mês</th><th scope="col">Chuva (mm)</th><th scope="col">Captação (L)</th></tr></thead><tbody></tbody></table>
+        </details>
+
+        <div class="notice" id="resNotice"></div>
+
+        <div class="cta-col">
+          <button class="btn btn-primary" id="saveEst" type="button">Usar no meu reservatório</button>
+          <p class="help" id="saveMsg" role="status"></p>
+          <a class="link" href="https://portal.inmet.gov.br" target="_blank" rel="noopener">Conferir a chuva no INMET <span aria-hidden="true">↗</span><span class="sr"> (abre em nova aba)</span></a>
+        </div>
+      </section>
+    </div>
+
+    <section class="explain" aria-labelledby="h-exp">
+      <h2 id="h-exp">O que muda o resultado</h2>
+      <dl>
+        <div><dt>Área do telhado</dt><dd>Quanto maior a área coberta, mais água. Dobrar a área dobra a captação.</dd></div>
+        <div><dt>Precipitação</dt><dd>É o fator mais variável: muda por região, por mês e de um ano para outro. Aqui usamos faixas de referência, não medições do seu município.</dd></div>
+        <div><dt>Coeficiente de escoamento</dt><dd>Parte da chuva fica no telhado (evaporação, respingos, poeira). Telhas lisas aproveitam mais; lajes e telhas porosas, menos.</dd></div>
+        <div><dt>Perdas do sistema</dt><dd>Descarte da primeira chuva (que lava o telhado), filtros, vazamentos e transbordo quando o reservatório enche.</dd></div>
+      </dl>
+    </section>
+  </div>
+</section>
+
+<!-- ================= RESERVATÓRIO ================= -->
+<section class="view" id="view-reservatorio" data-title="Meu reservatório" aria-labelledby="h-res-page" hidden>
+  <div class="wrap page">
+    <header class="page-head">
+      <p class="eyebrow">Meu reservatório</p>
+      <h1 id="h-res-page">Quantos dias a sua água dura?</h1>
+      <p class="lede">Informe a capacidade, o nível de hoje e o consumo diário. Os dados ficam salvos só neste aparelho.</p>
+    </header>
+
+    <div class="calc-grid">
+      <form class="panel" id="resForm" novalidate autocomplete="off">
+        <fieldset>
+          <legend>Reservatório</legend>
+          <label for="cap">Capacidade total (litros)</label>
+          <input id="cap" type="number" inputmode="numeric" min="0" step="100" placeholder="Ex.: 16000">
+          <label for="nivel">Água armazenada hoje (litros)</label>
+          <input id="nivel" type="number" inputmode="numeric" min="0" step="50" placeholder="Ex.: 6000" aria-describedby="nivelErr">
+          <p class="err" id="nivelErr" role="alert" hidden></p>
+        </fieldset>
+        <fieldset>
+          <legend>Consumo diário (litros por dia)</legend>
+          <p class="help">Valores iniciais de exemplo. Ajuste para a sua realidade.</p>
+          <label for="uso-domestico">Uso doméstico (beber, cozinhar, limpeza)</label>
+          <input id="uso-domestico" data-uso="domestico" type="number" inputmode="numeric" min="0" step="5">
+          <label for="uso-higiene">Higiene (banho, descarga)</label>
+          <input id="uso-higiene" data-uso="higiene" type="number" inputmode="numeric" min="0" step="5">
+          <label for="uso-irrigacao">Irrigação (horta, plantas, animais)</label>
+          <input id="uso-irrigacao" data-uso="irrigacao" type="number" inputmode="numeric" min="0" step="5">
+        </fieldset>
+        <fieldset>
+          <legend>Captação esperada</legend>
+          <label for="entrada">Entrada média estimada (litros por mês) <span class="opt">opcional</span></label>
+          <input id="entrada" type="number" inputmode="numeric" min="0" step="50" placeholder="Use a calculadora">
+          <p class="help" id="entradaHelp"></p>
+          <a class="link" href="#/calculadora">Abrir a calculadora →</a>
+        </fieldset>
+      </form>
+
+      <section class="panel result" aria-labelledby="h-res2" aria-live="polite">
+        <h2 id="h-res2">Situação hoje</h2>
+        <div class="gauge-wrap" id="resGauge"></div>
+        <div class="split-bars" id="resSplit"></div>
+        <div class="notice" id="resBalance"></div>
+      </section>
+    </div>
+  </div>
+</section>
+
+<!-- ================= GUIAS ================= -->
+<section class="view" id="view-guias" data-title="Guias de saneamento" aria-labelledby="h-guias" hidden>
+  <div class="wrap page">
+    <header class="page-head">
+      <p class="eyebrow">Saneamento e uso responsável</p>
+      <h1 id="h-guias">Guias de saneamento</h1>
+      <p class="lede">Resumos orientativos baseados em material público. Não substituem a orientação de um profissional habilitado.</p>
+    </header>
+    <div class="gcards big" id="guiasList"></div>
+  </div>
+</section>
+
+<section class="view" id="view-guia" data-title="Guia" aria-labelledby="h-guia" hidden>
+  <div class="wrap page narrow">
+    <a class="back" href="#/guias">← Todos os guias</a>
+    <figure class="ph guide-ph" id="guiaPh" data-fallback="Fotografia indisponível no momento"><img id="guiaImg" alt="" data-eager></figure>
+    <p class="eyebrow" id="guiaKicker">Resumo orientativo</p>
+    <h1 id="h-guia"></h1>
+    <p class="lede" id="guiaSummary"></p>
+    <ol class="steps" id="guiaSteps"></ol>
+    <div class="caution" id="guiaCaution" role="note"></div>
+    <p class="src" id="guiaSource"></p>
+    <p class="photo-note" id="guiaPhotoNote"></p>
+  </div>
+</section>
+
+<!-- ================= APOIO ================= -->
+<section class="view" id="view-apoio" data-title="Apoio e programas" aria-labelledby="h-apoio" hidden>
+  <div class="wrap page">
+    <header class="page-head">
+      <p class="eyebrow">Apoio e programas</p>
+      <h1 id="h-apoio">Programas que podem ajudar sua família</h1>
+    </header>
+    <div class="apoio-grid">
+      <article class="panel program">
+        <h2>Programa Cisternas</h2>
+        <p>Tecnologias sociais de baixo custo para captação de água de chuva, destinadas a famílias rurais de baixa renda inscritas no CadÚnico. A disponibilidade depende do município e do governo federal.</p>
+        <p class="help">O Cisterna Viva não faz parte do programa nem recebe inscrições: o pedido é feito nos canais oficiais.</p>
+        <a class="btn btn-primary" href="https://www.gov.br/mds/pt-br/acoes-e-programas/acesso-a-alimentos-e-a-agua/programa-cisternas" target="_blank" rel="noopener">Ver critérios no site oficial <span class="sr">(abre em nova aba)</span></a>
+      </article>
+      <article class="panel tip" aria-labelledby="h-tip">
+        <p class="eyebrow">Dica rápida</p>
+        <h2 id="h-tip" class="sr">Dica rápida</h2>
+        <p class="tip-text" id="tipText" aria-live="polite"></p>
+        <p class="src"><span id="tipCat"></span> · <a id="tipSrc" target="_blank" rel="noopener"></a></p>
+        <button class="btn btn-quiet" id="nextTip" type="button">Próxima dica</button>
+        <p class="help" id="tipCount"></p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FONTES ================= -->
+<section class="view" id="view-fontes" data-title="Fontes e créditos" aria-labelledby="h-fontes" hidden>
+  <div class="wrap page narrow">
+    <header class="page-head">
+      <p class="eyebrow">Transparência</p>
+      <h1 id="h-fontes">Fontes, premissas e créditos</h1>
+    </header>
+    <h2>Fontes institucionais</h2>
+    <div id="sourcesList" class="src-list"></div>
+
+    <h2>Premissas da calculadora</h2>
+    <ul class="plain">
+      <li>Fórmula: <code>V = chuva (mm) × área (m²) × coeficiente × (1 − perdas)</code>. 1 mm de chuva sobre 1 m² equivale a 1 litro.</li>
+      <li>A chuva vem de faixas de referência por macrorregião, em ordem de grandeza. <strong>Não são séries históricas do seu município</strong> e não foram validadas por órgão público.</li>
+      <li>Os coeficientes por tipo de telhado são valores típicos de projeto; o seu telhado pode variar.</li>
+      <li>Os guias de saneamento são resumos orientativos, <strong>sem revisão profissional documentada</strong>.</li>
+    </ul>
+
+    <h2>Fotografias</h2>
+    <p>Fotografias do Pexels, licença gratuita. A atribuição não é obrigatória, mas é um prazer reconhecer quem as fez.</p>
+    <ul class="plain" id="creditList"></ul>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p><strong>Cisterna Viva</strong> — água planejada é água que não falta.</p>
+    <p><a href="#/fontes">Fontes e créditos</a> · <a href="#/entrar">Tela de boas-vindas</a> · Estimativas orientativas; não substituem orientação técnica.</p>
+  </div>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/app.js" defer></script>
+</body>
+</html>
